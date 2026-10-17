@@ -1,0 +1,33 @@
+name: Welcome a project submission
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  welcome:
+    if: contains(github.event.issue.labels.*.name, 'showcase-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const match = body.match(/https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)/);
+            let repositoryNote = 'Please include a public GitHub repository so people can explore the work.';
+            if (match) {
+              try {
+                const { data } = await github.rest.repos.get({ owner: match[1], repo: match[2] });
+                repositoryNote = data.private
+                  ? 'The repository is private. Please share a public project link; private material is not published here.'
+                  : `The linked repository is publicly readable: **${data.full_name}**.`;
+              } catch {
+                repositoryNote = 'The linked repository could not be read publicly. Please check its URL and visibility.';
+              }
+            }
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: `Thanks for sharing your work with THD AI.\n\n${repositoryNote}\n\nA maintainer will review the description, creator credits, image permissions, project status, and a way to try it. Acceptance is recorded in a pull request updating the showroom catalogue. This reply does not publish or approve the project.\n\nYour repository can stay in your own account. In the meantime, you can meet collaborators in [Discussions](https://github.com/orgs/THD-AI/discussions/categories/ideas).`
+            });

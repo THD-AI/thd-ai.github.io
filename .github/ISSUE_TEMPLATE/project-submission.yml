@@ -1,0 +1,72 @@
+name: Share a project
+description: Add a personal or university project to the THD AI showroom.
+title: "[Showroom] "
+labels: [showcase-submission]
+body:
+  - type: markdown
+    attributes:
+      value: "Share work you care about. Your repository can stay where it is. A maintainer reviews submissions before they appear in the showroom. Do not include credentials, private coursework, or personal documents."
+  - type: input
+    id: name
+    attributes:
+      label: Project name
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Public GitHub repository
+      placeholder: https://github.com/your-name/your-project
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What does it do, and why did you make it?
+      description: A few clear sentences are enough. Include the current status and limitations.
+    validations:
+      required: true
+  - type: textarea
+    id: creators
+    attributes:
+      label: Creators and credits
+      description: Name the people who worked on it, link their public profiles, and credit material you used.
+    validations:
+      required: true
+  - type: input
+    id: demo
+    attributes:
+      label: Demo, screenshots, or setup instructions
+      description: Give someone a way to understand or try the project.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Where does it fit?
+      multiple: true
+      options:
+        - Campus life
+        - AI & ML
+        - Learning
+    validations:
+      required: true
+  - type: textarea
+    id: collaboration
+    attributes:
+      label: What kind of company are you looking for?
+      description: Feedback, contributors, a new maintainer, or simply sharing something you enjoyed making.
+  - type: textarea
+    id: context
+    attributes:
+      label: A little context
+      description: How does the work connect to THD? You may also explain your process or tools, including AI assistance, if useful. No proof of enrolment or private documents are needed.
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission to share
+      options:
+        - label: I created this project or have its creators' permission to submit it, and the image/description can be displayed with credit.
+          required: true
+        - label: I have not included credentials, private student information, or restricted university material.
+          required: true

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Find collaborators or share an idea
+    url: https://github.com/orgs/THD-AI/discussions/categories/ideas
+    about: Meet people before you have a finished project.
+  - name: Membership or private questions
+    url: https://github.com/THD-AI/.github/blob/main/SUPPORT.md
+    about: Find the right contact without publishing personal information.
