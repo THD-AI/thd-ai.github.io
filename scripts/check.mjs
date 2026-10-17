@@ -33,6 +33,23 @@ for (const project of collection.projects) {
     https(creator.url, 'creator');
   }
   assert(Array.isArray(project.tags) && project.tags.every(t => typeof t === 'string'), 'Project tags must be strings');
+  if (project.academic) {
+    const academic = project.academic;
+    assert(['coursework', 'companion', 'independent', 'collection'].includes(academic.kind), 'Known academic context required');
+    if (['coursework', 'companion'].includes(academic.kind)) {
+      assert(academic.modules?.length, 'Coursework must identify its modules');
+      https(academic.source, 'course source');
+      const moduleCodes = new Set();
+      for (const module of academic.modules) {
+        assert(/^AIN-B-\d+$/.test(module.code) && !moduleCodes.has(module.code), 'Unique official AIN-B module code required');
+        moduleCodes.add(module.code);
+        assert(module.name?.trim(), 'Course name required');
+        assert(Number.isInteger(module.semester) && module.semester >= 1 && module.semester <= 7, 'Curriculum semester must be 1–7');
+      }
+    } else {
+      assert(academic.label?.trim() && !academic.modules, 'Independent work and collections must not imply a single course assignment');
+    }
+  }
   if (project.image) {
     assert(project.image.startsWith('assets/') && !project.image.includes('..'), 'Project image must be a local asset');
     await access(path.join(site, project.image));

@@ -65,13 +65,23 @@ function card(project) {
   bottom.append(safeLink('Explore the project ↗', project.repository));
   if (project.demo) bottom.append(safeLink(project.demoLabel || 'Try it ↗', project.demo));
   else if (project.community) bottom.append(safeLink('Build with others ↗', project.community));
-  article.append(projectArt(project), meta, element('h3', '', project.title), element('p', 'project-description', project.description), creators, bottom, element('p', 'collaboration', project.collaboration));
+  article.append(projectArt(project), meta, element('h3', '', project.title));
+  if (project.academic) {
+    const context = element('p', 'project-course');
+    if (project.academic.modules) {
+      context.append(safeLink(project.academic.modules.map(module => `${module.code} · Semester ${module.semester}`).join(' / '), project.academic.source));
+      if (project.academic.kind === 'companion') context.append(document.createTextNode(' · Companion project'));
+    } else context.textContent = project.academic.label;
+    article.append(context);
+  }
+  article.append(element('p', 'project-description', project.description), creators, bottom, element('p', 'collaboration', project.collaboration));
   return article;
 }
 function render() {
   const query = search.value.trim().toLocaleLowerCase();
   const visible = projects.filter(project => {
-    const haystack = [project.title, project.description, project.categoryLabel, ...project.tags, ...project.creators.map(c => c.name)].join(' ').toLocaleLowerCase();
+    const courseTerms = project.academic?.modules?.flatMap(module => [module.code, module.name, `Semester ${module.semester}`]) || [project.academic?.label || ''];
+    const haystack = [project.title, project.description, project.categoryLabel, ...courseTerms, ...project.tags, ...project.creators.map(c => c.name)].join(' ').toLocaleLowerCase();
     return (activeFilter === 'all' || project.categories.includes(activeFilter)) && haystack.includes(query);
   });
   grid.replaceChildren(...visible.map(card));
@@ -83,7 +93,7 @@ async function loadProjects() {
   document.querySelector('#load-error').hidden = true;
   document.querySelector('#project-count').textContent = 'Opening the showroom…';
   try {
-    const response = await fetch(new URL('projects.json', import.meta.url));
+    const response = await fetch(new URL('projects.json', import.meta.url), { cache: 'no-cache' });
     if (!response.ok) throw new Error(`Project data: ${response.status}`);
     const data = await response.json();
     if (!Array.isArray(data.projects)) throw new Error('Invalid project collection');
