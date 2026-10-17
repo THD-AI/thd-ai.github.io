@@ -51,6 +51,12 @@ body:
         - Learning
     validations:
       required: true
+  - type: input
+    id: course
+    attributes:
+      label: Course (optional)
+      description: For coursework, give the programme, official module code and name, scheduled semester, and handbook or project source. Leave blank for personal projects.
+      placeholder: "AIN-B-29 · Deep Learning/Big Data · Semester 6"
   - type: textarea
     id: collaboration
     attributes:

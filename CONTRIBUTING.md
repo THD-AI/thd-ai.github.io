@@ -10,6 +10,8 @@ The submission workflow leaves an acknowledgement and checks whether the reposit
 
 To update or remove your own listing, open an issue or pull request. If you need to discuss something privately, [email Alexander](mailto:alex.rudaev@outlook.com).
 
+For coursework, use the optional `academic` object in `site/projects.json`: `kind` is `coursework` or `companion`, `modules` lists `code`, `name`, and scheduled `semester`, and `source` links the official handbook. Add the project-to-course evidence to [COURSES.md](COURSES.md). Personal projects do not need a course assignment. Module codes and course names are searchable in the showroom.
+
 ## Change the website
 
 The website is buildless HTML, CSS, and JavaScript in `site/`. It uses a local JSON catalogue, with no visitor accounts or database. Search and filters run in the browser. An external Google Fonts stylesheet provides the fonts; system sans-serif fonts are the fallback.
