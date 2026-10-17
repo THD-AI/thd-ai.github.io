@@ -8,7 +8,7 @@ Use the [project submission form](https://github.com/THD-AI/thd-ai.github.io/iss
 
 The submission workflow leaves an acknowledgement and checks whether the repository is publicly readable. It does not approve or automatically publish a listing. A maintainer reviews the information and image permission, then opens a pull request to update `site/projects.json`. Keep source attribution in `asset-sources.json` and `site/credits/index.html`. Close the submission issue when the listing is published. An experimental project is welcome when it is described honestly and has a useful way in.
 
-To update or remove your own listing, open an issue or pull request. If you need to discuss something privately, [email Alexander](mailto:alex.rudaev@outlook.com).
+To update or remove your own listing, open an issue or pull request. If you need to discuss something privately, [email Alex](mailto:alex.rudaev@outlook.com).
 
 For coursework, use the optional `academic` object in `site/projects.json`: `kind` is `coursework` or `companion`, `modules` lists `code`, `name`, and scheduled `semester`, and `source` links the official handbook. Add the project-to-course evidence to [COURSES.md](COURSES.md). Personal projects do not need a course assignment. Module codes and course names are searchable in the showroom.
 
