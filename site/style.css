@@ -6,3 +6,4 @@
 
 .project-course{font-size:12px;line-height:1.65;color:var(--muted);margin:9px 0 14px}.project-course a{color:inherit;overflow-wrap:anywhere}
 .course-map-link{font-size:13px;margin:0 0 22px}
+.project-grid:has(>.project-card:only-child){grid-template-columns:minmax(0,1fr);max-width:620px}

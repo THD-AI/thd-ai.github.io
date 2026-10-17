@@ -93,7 +93,9 @@ async function loadProjects() {
   document.querySelector('#load-error').hidden = true;
   document.querySelector('#project-count').textContent = 'Opening the showroom…';
   try {
-    const response = await fetch(new URL('projects.json', import.meta.url), { cache: 'no-cache' });
+    const catalogueURL = new URL('projects.json', import.meta.url);
+    catalogueURL.search = new URL(import.meta.url).search;
+    const response = await fetch(catalogueURL, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`Project data: ${response.status}`);
     const data = await response.json();
     if (!Array.isArray(data.projects)) throw new Error('Invalid project collection');
